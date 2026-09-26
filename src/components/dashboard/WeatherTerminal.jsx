@@ -3,20 +3,20 @@ import { CloudRain, Thermometer, Wind, Loader2, Zap, Cpu } from 'lucide-react';
 import { SoftWell, SoftBadge, SectionHeader } from '../ui/Neumorphic';
 
 const StatCell = ({ icon: Icon, iconColor, glowColor, value, unit, label }) => (
-  <div className="flex flex-col items-center p-4 rounded-xl bg-bg-base border border-subtle/20 group transition-all duration-300 hover:border-accent/20">
-    <div className={`p-2.5 rounded-lg mb-3 border transition-all duration-300 ${glowColor}`}>
-      <Icon size={18} className={iconColor} />
+  <div className="flex flex-col items-center py-3 px-2 rounded-xl bg-bg-base border border-subtle/20 group transition-all duration-300 hover:border-accent/20">
+    <div className={`p-2 rounded-lg mb-2 border transition-all duration-300 ${glowColor}`}>
+      <Icon size={16} className={iconColor} />
     </div>
-    <span className="font-display font-extrabold text-2xl text-foreground tabular-nums tracking-tight">
-      {value}<span className="text-sm text-muted ml-0.5 font-semibold">{unit}</span>
+    <span className="font-display font-extrabold text-2xl text-foreground tabular-nums tracking-tight leading-none">
+      {value}<span className="text-xs text-muted ml-0.5 font-semibold">{unit}</span>
     </span>
-    <span className="text-[9px] font-bold tracking-[0.25em] text-muted mt-2 uppercase">{label}</span>
+    <span className="text-[9px] font-bold tracking-[0.2em] text-muted mt-1.5 uppercase">{label}</span>
   </div>
 );
 
 export const WeatherTerminal = ({ data, isProcessing, language }) => {
   return (
-    <div className="glass-card rounded-[var(--radius-card)] p-5 h-full flex flex-col justify-between shadow-card border border-subtle/30">
+    <div className="glass-card rounded-[var(--radius-card)] p-4 h-full flex flex-col justify-between shadow-card border border-subtle/30">
       {/* Header */}
       <SectionHeader
         icon={Cpu}

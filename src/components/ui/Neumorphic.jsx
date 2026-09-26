@@ -92,17 +92,17 @@ export const SoftBadge = ({ children, variant = 'default', pulse = false, classN
 
 // --- Section Header with Icon ---
 export const SectionHeader = ({ icon: Icon, title, subtitle, badge, children }) => (
-  <div className="flex items-start justify-between gap-4 mb-4">
-    <div className="flex items-start gap-3">
+  <div className="flex items-center justify-between gap-3 mb-2.5 min-w-0">
+    <div className="flex items-center gap-2.5 min-w-0 flex-1">
       {Icon && (
         <div className="p-2 rounded-lg bg-bg-elevated border border-subtle/30 shrink-0">
           <Icon size={18} className="text-accent" />
         </div>
       )}
-      <div>
-        <h3 className="font-display font-semibold text-foreground text-lg tracking-tight">{title}</h3>
+      <div className="min-w-0 flex-1">
+        <h3 className="font-display font-semibold text-foreground text-[15px] sm:text-base lg:text-lg tracking-tight truncate leading-tight">{title}</h3>
         {subtitle && (
-          <p className="text-muted text-sm mt-0.5">{subtitle}</p>
+          <p className="text-muted text-xs sm:text-sm mt-0.5 truncate">{subtitle}</p>
         )}
       </div>
     </div>

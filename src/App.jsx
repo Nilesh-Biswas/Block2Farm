@@ -23,7 +23,8 @@ export default function App() {
 
   const filteredNodes = ALL_NODES.filter(node => 
     node.label.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    node.tooltip.toLowerCase().includes(searchQuery.toLowerCase())
+    (node.block && node.block.toLowerCase().includes(searchQuery.toLowerCase())) ||
+    (node.tooltip && node.tooltip.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const handleDownscaleRequest = (id) => {
@@ -198,7 +199,7 @@ export default function App() {
                               </div>
                               <div className="text-[10px] text-muted/60 mt-0.5 flex items-center gap-1.5 truncate">
                                 <MapPin size={9} />
-                                {regionName} • {node.tooltip.split('—')[0].trim()}
+                                {regionName} • {node.block} <span className="text-accent mx-0.5">→</span> {node.type} Terrain
                               </div>
                             </div>
                           </button>

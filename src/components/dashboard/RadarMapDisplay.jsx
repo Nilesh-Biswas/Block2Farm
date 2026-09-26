@@ -86,11 +86,13 @@ export const RadarMapDisplay = ({ activePanchayat, onSelectPanchayat, isProcessi
             }}
           >
             <Popup>
-              <div style={{ fontFamily: 'var(--font-body)', textAlign: 'center' }}>
-                <strong style={{ fontSize: '13px' }}>{coords.name}</strong>
-                <br />
-                <span style={{ fontSize: '11px', opacity: 0.7 }}>
-                  {id === activePanchayat ? '● Active' : 'Click to select'}
+              <div style={{ fontFamily: 'var(--font-body)', textAlign: 'center', padding: '4px' }}>
+                <div style={{ fontSize: '13px', fontWeight: '800', marginBottom: '2px' }}>{coords.name}</div>
+                <div style={{ fontSize: '10px', color: 'var(--color-muted)', marginBottom: '8px' }}>
+                  Downscaled from {coords.block}
+                </div>
+                <span style={{ fontSize: '10px', fontWeight: 'bold', padding: '2px 6px', borderRadius: '4px', background: id === activePanchayat ? 'var(--color-accent)' : 'transparent', color: id === activePanchayat ? '#fff' : 'var(--color-muted)', border: id === activePanchayat ? 'none' : '1px solid var(--color-subtle)' }}>
+                  {id === activePanchayat ? '● ACTIVE NODE' : 'CLICK TO SELECT'}
                 </span>
               </div>
             </Popup>
