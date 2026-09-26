@@ -2,15 +2,7 @@ import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
-// Panchayat coordinates (Bastar division, Chhattisgarh)
-const PANCHAYAT_COORDS = {
-  'panchayat-1': { lat: 19.60, lng: 81.66, name: 'Rampur (Valley)' },
-  'panchayat-2': { lat: 19.68, lng: 81.72, name: 'Shikarpur (Hilltop)' },
-  'panchayat-3': { lat: 19.59, lng: 81.65, name: 'Kondagaon (Plains)' },
-  'panchayat-4': { lat: 19.73, lng: 81.25, name: 'Narayanpur (Riverside)' },
-  'panchayat-5': { lat: 18.97, lng: 81.35, name: 'Dantewada (Forest)' },
-  'panchayat-6': { lat: 19.08, lng: 82.02, name: 'Jagdalpur (Plateau)' },
-};
+import { PANCHAYAT_COORDS } from '../../data/mockData';
 
 // Glowing marker icon for dark theme
 const createIcon = (isActive) => L.divIcon({
@@ -53,7 +45,7 @@ const FlyToActive = ({ activePanchayat }) => {
 
     const coords = PANCHAYAT_COORDS[activePanchayat];
     if (coords) {
-      map.flyTo([coords.lat, coords.lng], 13, { duration: 1.2 });
+      map.flyTo([coords.lat, coords.lng], 11, { duration: 1.2 });
     }
   }, [activePanchayat, map]);
 
@@ -61,13 +53,13 @@ const FlyToActive = ({ activePanchayat }) => {
 };
 
 export const RadarMapDisplay = ({ activePanchayat, onSelectPanchayat, isProcessing }) => {
-  const center = PANCHAYAT_COORDS[activePanchayat] || PANCHAYAT_COORDS['panchayat-1'];
+  const center = PANCHAYAT_COORDS[activePanchayat] || PANCHAYAT_COORDS['cg-1'];
 
   return (
     <div className="relative w-full h-full rounded-[var(--radius-card)] overflow-hidden">
       <MapContainer
         center={[center.lat, center.lng]}
-        zoom={10}
+        zoom={11}
         scrollWheelZoom={true}
         zoomControl={true}
         className="w-full h-full"
@@ -112,7 +104,7 @@ export const RadarMapDisplay = ({ activePanchayat, onSelectPanchayat, isProcessi
           <div className="flex flex-col items-center gap-3">
             <div className="w-8 h-8 border-2 border-accent/20 border-t-accent rounded-full animate-spin" />
             <span className="font-mono text-[10px] font-bold text-foreground/70 tracking-[0.2em] uppercase">
-              Recalculating…
+              Fusing 30m DEM & Sentinel-2…
             </span>
           </div>
         </div>

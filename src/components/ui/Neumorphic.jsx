@@ -54,33 +54,34 @@ export const SoftButton = ({ children, onClick, active, disabled, variant = 'def
   );
 };
 
-// --- Inset Well (For data readouts, maps) ---
+// --- Glass Well (Inset container for maps/charts) ---
 export const SoftWell = ({ children, className = '' }) => (
   <div className={`
-    bg-bg-base rounded-[var(--radius-card)] overflow-hidden
-    border border-subtle/30 shadow-inset
+    bg-bg-deep/50 rounded-[var(--radius-card)] overflow-hidden
+    shadow-inset border border-subtle/20 relative
     ${className}
   `}>
     {children}
   </div>
 );
 
-// --- Status Badge ---
+// --- Glowing Status Badge ---
 export const SoftBadge = ({ children, variant = 'default', pulse = false, className = '' }) => {
   const variants = {
-    default: 'bg-bg-elevated text-muted border-subtle/50',
-    accent: 'bg-accent-dim text-accent border-accent/20',
-    cyan: 'bg-cyan-dim text-cyan border-cyan/20',
-    success: 'bg-success/10 text-success border-success/20',
-    warning: 'bg-warning/10 text-warning border-warning/20',
-    critical: 'bg-critical/10 text-critical border-critical/20',
+    default: 'bg-bg-elevated text-muted border-subtle/30',
+    accent: 'bg-accent/15 text-accent border-accent/30 shadow-glow-accent',
+    success: 'bg-success/15 text-success border-success/30 shadow-glow-cyan',
+    warning: 'bg-warning/15 text-warning border-warning/30',
+    critical: 'bg-critical/15 text-critical border-critical/30',
+    cyan: 'bg-cyan/15 text-cyan border-cyan/30 shadow-glow-cyan',
   };
 
   return (
     <span className={`
       inline-flex items-center gap-1.5 px-2.5 py-0.5 
-      rounded-full text-[10px] font-bold tracking-wider uppercase
-      border ${variants[variant]}
+      rounded-full text-[10px] font-bold uppercase tracking-wider border
+      backdrop-blur-md
+      ${variants[variant] || variants.default}
       ${pulse ? 'animate-pulse' : ''}
       ${className}
     `}>
@@ -89,23 +90,25 @@ export const SoftBadge = ({ children, variant = 'default', pulse = false, classN
   );
 };
 
-// --- Section Header ---
+// --- Section Header with Icon ---
 export const SectionHeader = ({ icon: Icon, title, subtitle, badge, children }) => (
-  <div className="flex items-center justify-between mb-5">
-    <div className="flex items-center gap-3">
+  <div className="flex items-start justify-between gap-4 mb-4">
+    <div className="flex items-start gap-3">
       {Icon && (
-        <div className="p-2 rounded-lg bg-accent-dim border border-accent/10">
+        <div className="p-2 rounded-lg bg-bg-elevated border border-subtle/30 shrink-0">
           <Icon size={18} className="text-accent" />
         </div>
       )}
       <div>
-        <h2 className="font-display font-bold text-sm text-foreground tracking-tight flex items-center gap-2">
-          {title}
-          {badge}
-        </h2>
-        {subtitle && <p className="text-[11px] text-muted mt-0.5">{subtitle}</p>}
+        <h3 className="font-display font-semibold text-foreground text-lg tracking-tight">{title}</h3>
+        {subtitle && (
+          <p className="text-muted text-sm mt-0.5">{subtitle}</p>
+        )}
       </div>
     </div>
-    {children}
+    <div className="flex items-center gap-3 shrink-0">
+      {children}
+      {badge}
+    </div>
   </div>
 );
