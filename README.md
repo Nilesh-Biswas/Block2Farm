@@ -41,7 +41,7 @@ Because traditional downscaling relies on dense physical weather stations that m
 
 1. **Navigate to the project directory**:
    ```bash
-   cd Idea2
+   cd Block2Farm
    ```
 2. **Install dependencies**:
    ```bash
