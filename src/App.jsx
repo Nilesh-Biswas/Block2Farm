@@ -116,18 +116,6 @@ export default function App() {
 
       {/* ===== MAIN CONTENT ===== */}
 
-      {/* Toast Notification */}
-      {toastMessage && (
-        <div className="fixed top-20 right-6 z-[10002] animate-fade-in pointer-events-auto">
-          <div className="flex items-center gap-3 px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl text-sm font-medium text-zinc-200">
-            <div className="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center shrink-0">
-               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-success"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            </div>
-            {toastMessage}
-          </div>
-        </div>
-      )}
-
       <main className="flex-1 max-w-[1400px] w-full mx-auto px-4 md:px-6 py-6">
         
         {/* Page Title Row */}
@@ -159,8 +147,10 @@ export default function App() {
           {/* Left: Map + Telemetry (8 cols) */}
           <div className="lg:col-span-8 flex flex-col gap-4">
             
-            {/* Scalable Node Search Selector */}
-            <div className="relative z-[9999] w-full max-w-sm">
+            {/* Top Controls Row */}
+            <div className="flex flex-row items-center gap-4 relative z-[9999] w-full mb-4">
+              {/* Scalable Node Search Selector */}
+              <div className="relative w-full max-w-sm">
               <div 
                 className={`
                   flex items-center gap-2.5 px-3 py-2.5 rounded-[var(--radius-base)] 
@@ -242,6 +232,18 @@ export default function App() {
                       })}
                     </>
                   )}
+                </div>
+              )}
+            </div>
+
+            
+              {/* Inline SMS Notification */}
+              {toastMessage && (
+                <div className="animate-fade-in flex items-center gap-2.5 px-3 py-2 bg-success/15 border border-success/30 rounded-lg shadow-sm text-[11px] font-bold tracking-wide text-success shrink-0 backdrop-blur-md">
+                  <div className="w-5 h-5 rounded-full bg-success/20 flex items-center justify-center shrink-0">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  {toastMessage}
                 </div>
               )}
             </div>
