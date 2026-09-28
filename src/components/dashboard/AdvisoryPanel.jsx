@@ -6,7 +6,7 @@ export const AdvisoryPanel = ({ alerts, isProcessing, language }) => {
   const hasCritical = alerts.some(a => a.type === 'critical');
 
   return (
-    <div className="h-full bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col">
+    <div className="h-full bg-slate-900 border border-slate-800/80 shadow-none rounded-xl p-5 flex flex-col">
       {/* 1. Main Container & Header */}
       <div className="flex items-center gap-2 mb-5">
         <MapPin size={22} className="text-slate-400" />
@@ -32,7 +32,7 @@ export const AdvisoryPanel = ({ alerts, isProcessing, language }) => {
             </div>
           ) : (
           /* 2. The Alert Card (Inner Container) */
-          <div className="bg-slate-800/50 border-l-4 border-red-500 p-5 rounded-r-lg flex flex-col animate-fade-in relative">
+          <div className="bg-slate-900/50 border border-red-500/20 p-5 rounded-r-lg flex flex-col animate-fade-in relative">
             
             {/* Grid layout to keep icon isolated on the left, and all text perfectly flush on the right */}
             <div className="flex items-start gap-3">
@@ -44,7 +44,7 @@ export const AdvisoryPanel = ({ alerts, isProcessing, language }) => {
                 {/* 3. Card Header (Flex Row) */}
                 <div className="flex items-center justify-between w-full">
                   <h3 className="text-base font-semibold tracking-tight text-white">PostGIS Flood Alert</h3>
-                  <span className="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded">
+                  <span className="bg-red-500/10 text-red-400 border border-red-500/20 text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded">
                     CRITICAL
                   </span>
                 </div>

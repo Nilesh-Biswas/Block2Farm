@@ -10,7 +10,7 @@ const activeIcon = L.divIcon({
   iconSize: [24, 24],
   iconAnchor: [12, 12],
   html: `
-    <div style="width:24px;height:24px;border-radius:50%;background:#7c6aff;border:2px solid #a78bfa;box-shadow:0 0 16px rgba(124,106,255,0.6), 0 0 32px rgba(124,106,255,0.2);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;">
+    <div style="width:24px;height:24px;border-radius:50%;background:#3b82f6;border:2px solid #60a5fa;box-shadow:0 0 16px rgba(59,130,246,0.6), 0 0 32px rgba(59,130,246,0.2);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;">
       <div style="width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(255,255,255,0.5);"></div>
     </div>
   `
@@ -22,7 +22,7 @@ const inactiveIcon = L.divIcon({
   iconAnchor: [12, 12],
   html: `
     <div style="width:24px;height:24px;border-radius:50%;background:rgba(28,42,63,0.9);border:2px solid rgba(100,116,139,0.5);box-shadow:0 2px 8px rgba(0,0,0,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;">
-      <div style="width:6px;height:6px;border-radius:50%;background:#7c6aff;"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:#3b82f6;"></div>
     </div>
   `
 });
@@ -115,7 +115,7 @@ export const RadarMapDisplay = ({ activePanchayat, terrainType, onSelectPanchaya
         <div className="text-xs font-bold text-slate-400 tracking-wider mb-2">PGML INFERENCE TRACE</div>
         <div className="font-mono text-xs grid grid-cols-[145px_auto] gap-x-2 gap-y-1 w-max items-center">
           <span className="text-slate-300">"geomorphology":</span>
-          <span className="text-purple-400 text-right">"{terrainString}"</span>
+          <span className="text-blue-400 text-right">"{terrainString}"</span>
           
           <span className="text-slate-300">"base_grid":</span>
           <span className="text-emerald-400 text-right">32.0</span>
@@ -147,3 +147,4 @@ export const RadarMapDisplay = ({ activePanchayat, terrainType, onSelectPanchaya
     </div>
   );
 };
+

@@ -64,7 +64,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-dvh flex flex-col bg-grid-pattern">
+    <div className="min-h-dvh flex flex-col bg-slate-950 bg-grid-pattern">
 
       {/* Click-outside overlay to close search */}
       {isSearchOpen && (
@@ -238,8 +238,8 @@ export default function App() {
 
               {/* Inline SMS Notification */}
               {toastMessage && (
-                <div className="animate-fade-in flex items-center gap-2.5 px-3 py-2 bg-success/15 border border-success/30 rounded-lg shadow-sm text-[11px] font-bold tracking-wide text-success shrink-0 backdrop-blur-md">
-                  <div className="w-5 h-5 rounded-full bg-success/20 flex items-center justify-center shrink-0">
+                <div className="animate-fade-in flex items-center gap-2.5 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[11px] font-mono tracking-wide text-emerald-400 shrink-0 backdrop-blur-md">
+                  <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </div>
                   {toastMessage}

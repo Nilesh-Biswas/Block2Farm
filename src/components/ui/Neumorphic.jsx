@@ -29,7 +29,7 @@ export const SoftButton = ({ children, onClick, active, disabled, variant = 'def
   };
   
   const defaultStyle = active 
-    ? "bg-accent/15 text-accent border-accent/30 shadow-[inset_0_0_20px_rgba(124,106,255,0.1)]" 
+    ? "bg-accent/15 text-accent border-accent/30 shadow-[inset_0_0_20px_rgba(59,130,246,0.1)]" 
     : "bg-bg-surface text-foreground/80 border-subtle/50 hover:border-accent/30 hover:text-accent hover:bg-accent/5 active:scale-[0.97]";
     
   const primaryStyle = `
