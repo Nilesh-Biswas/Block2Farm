@@ -52,11 +52,12 @@ export const ComparisonChart = ({ baseTemp, localTemp, isProcessing, language })
               opacity={0.5}
             />
             <YAxis 
-              stroke="var(--color-muted)" 
-              fontSize={10} 
-              tickLine={false}
-              axisLine={false}
-              opacity={0.5}
+                stroke="var(--color-foreground)" 
+                fontSize={14} 
+                fontWeight={600}
+                tickLine={false}
+                axisLine={false}
+                opacity={0.9}
               domain={['dataMin - 2', 'dataMax + 2']}
             />
             <Tooltip 
@@ -69,7 +70,7 @@ export const ComparisonChart = ({ baseTemp, localTemp, isProcessing, language })
               }}
               itemStyle={{ fontWeight: 600 }}
             />
-            <Legend iconType="circle" wrapperStyle={{ fontSize: '11px', color: 'var(--color-muted)', paddingTop: '10px' }} />
+            <Legend iconType="circle" wrapperStyle={{ fontSize: '14px', color: 'var(--color-foreground)', fontWeight: 'bold', paddingTop: '10px' }} />
             
             {/* Generic Block Data Line */}
             <Area 

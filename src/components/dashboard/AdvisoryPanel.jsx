@@ -64,24 +64,35 @@ const AlertItem = ({ alert, index, language, onSendSMS }) => {
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2 mb-1 flex-wrap pr-8">
+          
           <h3 className="font-semibold text-foreground text-sm leading-tight">{displayTitle}</h3>
           <SoftBadge variant={config.badgeVariant}>{displayBadge}</SoftBadge>
+          <span className="px-2 py-0.5 rounded bg-bg-deep border border-subtle/20 text-[9px] font-bold text-accent uppercase tracking-wider">
+            Target: Wheat (Harvest Stage)
+          </span>
+
         </div>
         <p className="text-xs text-muted leading-relaxed">{displayMessage}</p>
         
+        
         {/* SMS Broadcast Action for Warnings/Critical */}
         {(alert.type === 'critical' || alert.type === 'warning') && (
-          <button 
-            onClick={handleSMS}
-            disabled={sent}
-            className={`absolute right-3 top-3 p-1.5 rounded-md transition-all duration-200 ${
-              sent ? 'text-success bg-success/10 cursor-default' : 'text-muted hover:text-accent hover:bg-accent/10 cursor-pointer'
-            }`}
-            title={language === 'hi' ? 'किसानों को SMS भेजें' : 'Broadcast SMS to Farmers'}
-          >
-            {sent ? <CheckCircle2 size={14} /> : <Send size={14} />}
-          </button>
+          <div className="mt-3 pt-3 border-t border-subtle/10 flex items-center justify-between">
+            <span className="px-2.5 py-1 bg-accent/10 text-accent rounded text-[9px] font-bold uppercase tracking-widest border border-accent/20">
+              [Bhashini SMS / Audio - Hindi Ready]
+            </span>
+            <button 
+              onClick={handleSMS}
+              disabled={sent}
+              className={`p-1.5 rounded-md transition-all duration-200 border ${
+                sent ? 'text-success bg-success/10 border-success/30 cursor-default' : 'text-accent bg-bg-surface border-subtle/40 hover:border-accent hover:bg-accent/10 cursor-pointer'
+              }`}
+            >
+              {sent ? <CheckCircle2 size={14} /> : <Send size={14} />}
+            </button>
+          </div>
         )}
+
       </div>
     </div>
   );

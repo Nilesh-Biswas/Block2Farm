@@ -92,7 +92,7 @@ const generateAlerts = (node) => {
       type: 'critical', 
       title: 'PostGIS Flood Alert', 
       titleHi: 'पोस्टजीआईएस बाढ़ चेतावनी',
-      message: `30m DEM inference shows orographic pooling. ${node.rain}mm rain expected. Suspend irrigation immediately.`,
+      message: `30m DEM inference shows orographic pooling. 35mm rain expected. Suspend irrigation immediately.`,
       messageHi: `30m DEM अनुमान पर्वतीय जल संचय दिखाता है। ${node.rain}mm बारिश की उम्मीद है। सिंचाई तुरंत रोकें।`
     });
   } else if (node.rain > 10) {

@@ -109,7 +109,7 @@ export default function App() {
             </h2>
             <p className="text-muted text-sm mt-1 flex items-center gap-2">
               <Activity size={14} className="text-accent" />
-              {language === 'hi' ? '12 किमी ब्लॉक → 1-5 वर्ग किमी पंचायत डाउनस्केलिंग • Physics-Guided ML' : '12km Block → 1-5 sq km Panchayat Downscaling • Physics-Guided ML'}
+              {language === 'hi' ? '12 किमी ब्लॉक → 1-5 वर्ग किमी पंचायत डाउनस्केलिंग • Physics-Guided ML' : '12km Block → 1-2 km Panchayat Downscaling • Physics-Guided ML'}
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs">
@@ -142,7 +142,7 @@ export default function App() {
                 <Search size={16} className={isSearchOpen ? 'text-accent' : 'text-muted'} />
                 <input 
                   type="text" 
-                  placeholder={language === 'hi' ? "पंचायत या ब्लॉक खोजें (उदा. Kondagaon)..." : "Search Panchayat or Block (e.g. Kondagaon)..."} 
+                  placeholder={language === 'hi' ? "पंचायत या ब्लॉक खोजें (उदा. Kondagaon)..." : "Search Panchayat or Block (e.g. Supaul)..."} 
                   className="bg-transparent border-none outline-none text-sm text-foreground flex-1 placeholder:text-muted/50"
                   value={searchQuery}
                   onChange={(e) => {
