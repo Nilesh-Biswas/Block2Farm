@@ -83,7 +83,7 @@ const AlertItem = ({ alert, index, language, onSendSMS }) => {
           <div className="mt-3 pt-3 border-t border-subtle/10 flex items-center">
             <span className="px-2.5 py-1.5 bg-success/10 text-success rounded-md text-[10px] font-mono font-semibold tracking-wide border border-success/20 flex items-center gap-2 cursor-default select-none">
               <CheckCircle2 size={12} />
-              [ ✓ Auto-SMS Dispatched via Bhashini (Hindi) ]
+              Auto-SMS Dispatched via Bhashini (Hindi)
             </span>
           </div>
         )}
