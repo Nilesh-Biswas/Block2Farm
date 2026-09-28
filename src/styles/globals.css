@@ -237,3 +237,20 @@
   background: var(--color-bg-surface) !important;
   box-shadow: none !important;
 }
+/* -- Leaflet Anti-Jitter Hacks -- */
+.leaflet-tile-container img {
+  width: 256.5px !important; 
+  height: 256.5px !important;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.leaflet-map-pane,
+.leaflet-tile-pane,
+.leaflet-layer,
+.leaflet-marker-pane {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+}

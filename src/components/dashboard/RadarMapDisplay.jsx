@@ -4,31 +4,27 @@ import L from 'leaflet';
 
 import { PANCHAYAT_COORDS } from '../../data/mockData';
 
-// Glowing marker icon for dark theme
-const createIcon = (isActive) => L.divIcon({
+// SINGLETON ICONS: Pre-instantiate to avoid memory allocation and garbage collection jitter on every render!
+const activeIcon = L.divIcon({
   className: '',
   iconSize: [24, 24],
   iconAnchor: [12, 12],
   html: `
-    <div style="
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      background: ${isActive ? '#7c6aff' : 'rgba(28, 42, 63, 0.9)'};
-      border: 2px solid ${isActive ? '#a78bfa' : 'rgba(100, 116, 139, 0.5)'};
-      box-shadow: ${isActive
-        ? '0 0 16px rgba(124, 106, 255, 0.6), 0 0 32px rgba(124, 106, 255, 0.2)'
-        : '0 2px 8px rgba(0, 0, 0, 0.4)'};
-      transition: all 0.3s ease;
-      display: flex; align-items: center; justify-content: center;
-    ">
-      <div style="
-        width: 6px; height: 6px;
-        border-radius: 50%;
-        background: ${isActive ? '#fff' : '#7c6aff'};
-        ${isActive ? 'box-shadow: 0 0 6px rgba(255,255,255,0.5);' : ''}
-      "></div>
+    <div style="width:24px;height:24px;border-radius:50%;background:#7c6aff;border:2px solid #a78bfa;box-shadow:0 0 16px rgba(124,106,255,0.6), 0 0 32px rgba(124,106,255,0.2);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;">
+      <div style="width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(255,255,255,0.5);"></div>
     </div>
-  `,
+  `
+});
+
+const inactiveIcon = L.divIcon({
+  className: '',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+  html: `
+    <div style="width:24px;height:24px;border-radius:50%;background:rgba(28,42,63,0.9);border:2px solid rgba(100,116,139,0.5);box-shadow:0 2px 8px rgba(0,0,0,0.4);transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;">
+      <div style="width:6px;height:6px;border-radius:50%;background:#7c6aff;"></div>
+    </div>
+  `
 });
 
 // Smooth Panning Component
@@ -37,67 +33,82 @@ const MapUpdater = ({ center }) => {
 
   React.useEffect(() => {
     if (center && center.lat && center.lng) {
-      requestAnimationFrame(() => {
+      // Use setTimeout to yield to the React rendering thread FIRST, 
+      // preventing the flyTo animation from competing with DOM updates!
+      setTimeout(() => {
         map.stop();
-        map.flyTo([center.lat, center.lng], 11, { duration: 1.5, easeLinearity: 0.25 });
-        setTimeout(() => { map.invalidateSize(); }, 300);
-      });
+        
+        map.setView([center.lat, center.lng], 11, { animate: true, duration: 1.2 });
+      }, 50);
     }
   }, [center.lat, center.lng, map]);
 
   return null;
 };
 
+// Memoized Marker List to prevent re-rendering untouched markers
+const MemoizedMarkers = React.memo(({ activePanchayat, onSelectPanchayat }) => {
+  return (
+    <>
+      {Object.entries(PANCHAYAT_COORDS).map(([id, coords]) => (
+        <Marker
+          key={id}
+          position={[coords.lat, coords.lng]}
+          icon={id === activePanchayat ? activeIcon : inactiveIcon}
+          eventHandlers={{
+            click: () => {
+              if (onSelectPanchayat) {
+                onSelectPanchayat(id);
+              }
+            },
+          }}
+        >
+          <Popup autoPan={false}>
+            <div style={{ fontFamily: 'var(--font-body)', textAlign: 'center', padding: '4px' }}>
+              <div style={{ fontSize: '13px', fontWeight: '800', marginBottom: '2px' }}>{coords.name}</div>
+              <div style={{ fontSize: '10px', color: 'var(--color-muted)', marginBottom: '8px' }}>
+                Downscaled from {coords.block}
+              </div>
+              <span style={{ fontSize: '10px', fontWeight: 'bold', padding: '2px 6px', borderRadius: '4px', background: id === activePanchayat ? 'var(--color-accent)' : 'transparent', color: id === activePanchayat ? '#fff' : 'var(--color-muted)', border: id === activePanchayat ? 'none' : '1px solid var(--color-subtle)' }}>
+                {id === activePanchayat ? '✦ ACTIVE NODE' : 'CLICK TO SELECT'}
+              </span>
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+    </>
+  );
+});
+
 export const RadarMapDisplay = ({ activePanchayat, terrainType, onSelectPanchayat, isProcessing }) => {
   const terrainString = terrainType ? terrainType.toLowerCase().replace(/\s+/g, "_") : "unknown";
   const activeCenter = PANCHAYAT_COORDS[activePanchayat] || PANCHAYAT_COORDS['cg-1'];
 
+  // Aggressively memoize the entire MapContainer to block 'isProcessing' re-renders
+  const mapDOM = React.useMemo(() => (
+    <MapContainer
+      center={[19.74, 81.69]} 
+      zoom={11}
+      scrollWheelZoom={true}
+      zoomControl={true}
+      className="w-full h-full transition-none"
+      style={{ borderRadius: 'inherit', transform: 'translate3d(0,0,0)' }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
+        url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+      />
+      <MapUpdater center={activeCenter} />
+      <MemoizedMarkers 
+        activePanchayat={activePanchayat} 
+        onSelectPanchayat={onSelectPanchayat} 
+      />
+    </MapContainer>
+  ), [activePanchayat, activeCenter, onSelectPanchayat, isProcessing]);
+
   return (
-    <div className="relative w-full h-full min-h-[400px] rounded-[var(--radius-card)] overflow-hidden transition-none">
-      <MapContainer
-        center={[19.74, 81.69]} 
-        zoom={11}
-        scrollWheelZoom={true}
-        zoomControl={true}
-        className="w-full h-full transition-none"
-        style={{ borderRadius: 'inherit' }}
-      >
-        {React.useMemo(() => (
-          <TileLayer
-            attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
-            url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
-          />
-        ), [])}
-
-        <MapUpdater center={activeCenter} />
-
-        {Object.entries(PANCHAYAT_COORDS).map(([id, coords]) => (
-          <Marker
-            key={id}
-            position={[coords.lat, coords.lng]}
-            icon={createIcon(id === activePanchayat)}
-            eventHandlers={{
-              click: () => {
-                if (onSelectPanchayat && !isProcessing) {
-                  onSelectPanchayat(id);
-                }
-              },
-            }}
-          >
-            <Popup autoPan={false}>
-              <div style={{ fontFamily: 'var(--font-body)', textAlign: 'center', padding: '4px' }}>
-                <div style={{ fontSize: '13px', fontWeight: '800', marginBottom: '2px' }}>{coords.name}</div>
-                <div style={{ fontSize: '10px', color: 'var(--color-muted)', marginBottom: '8px' }}>
-                  Downscaled from {coords.block}
-                </div>
-                <span style={{ fontSize: '10px', fontWeight: 'bold', padding: '2px 6px', borderRadius: '4px', background: id === activePanchayat ? 'var(--color-accent)' : 'transparent', color: id === activePanchayat ? '#fff' : 'var(--color-muted)', border: id === activePanchayat ? 'none' : '1px solid var(--color-subtle)' }}>
-                  {id === activePanchayat ? '✦ ACTIVE NODE' : 'CLICK TO SELECT'}
-                </span>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+    <div className="relative w-full h-full min-h-[400px] rounded-[var(--radius-card)] overflow-hidden transition-none transform-gpu">
+      {mapDOM}
 
       {/* PGML Inference Trace Overlay */}
       <div className="absolute top-4 left-14 z-[1000] bg-slate-900/85 backdrop-blur-sm border border-slate-700 rounded-lg p-3 shadow-lg pointer-events-none hidden sm:block">

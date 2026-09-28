@@ -20,15 +20,17 @@ export const AdvisoryPanel = ({ alerts, isProcessing, language }) => {
 
       <div className={`flex-1 transition-all duration-500 ${isProcessing ? 'opacity-20 blur-[3px]' : 'opacity-100'}`}>
         {!hasCritical ? (
-          <div className="flex flex-col items-center justify-center py-10 text-center h-full">
-            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 mb-3">
-              <ShieldCheck size={28} className="text-emerald-400" />
+            <div className="flex flex-col items-center justify-center h-full pt-8 pb-6">
+              <div className="h-16 w-16 rounded-full bg-emerald-500/10 border border-dashed border-emerald-500/30 flex items-center justify-center">
+                <ShieldCheck size={28} className="text-emerald-400" />
+              </div>
+              <p className="text-slate-200 font-semibold text-base mt-4">System Nominal</p>
+              <p className="text-slate-400 text-sm mt-1">No critical spatial rules intersected.</p>
+              <div className="text-slate-500 font-mono text-xs mt-4 bg-slate-800/50 px-3 py-1 rounded-full">
+                Query time: 42ms • Scanning 14 parameters
+              </div>
             </div>
-            <p className="text-slate-400 text-sm font-medium">
-              All clear. No spatial rules intersected.
-            </p>
-          </div>
-        ) : (
+          ) : (
           /* 2. The Alert Card (Inner Container) */
           <div className="bg-slate-800/50 border-l-4 border-red-500 p-5 rounded-r-lg flex flex-col animate-fade-in relative">
             
