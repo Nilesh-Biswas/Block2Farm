@@ -34,18 +34,15 @@ const createIcon = (isActive) => L.divIcon({
 // Fly-to active panchayat ONLY when it changes (not on every re-render)
 const FlyToActive = ({ activePanchayat }) => {
   const map = useMap();
-  const isFirstRender = React.useRef(true);
 
   React.useEffect(() => {
-    // Skip the initial mount — MapContainer already centers on the right spot
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
     const coords = PANCHAYAT_COORDS[activePanchayat];
     if (coords) {
-      map.flyTo([coords.lat, coords.lng], 11, { duration: 1.2 });
+      requestAnimationFrame(() => {
+        map.invalidateSize();
+        map.stop();
+        map.flyTo([coords.lat, coords.lng], 11, { duration: 1.5 });
+      });
     }
   }, [activePanchayat, map]);
 
@@ -85,7 +82,7 @@ export const RadarMapDisplay = ({ activePanchayat, onSelectPanchayat, isProcessi
               },
             }}
           >
-            <Popup>
+            <Popup autoPan={false}>
               <div style={{ fontFamily: 'var(--font-body)', textAlign: 'center', padding: '4px' }}>
                 <div style={{ fontSize: '13px', fontWeight: '800', marginBottom: '2px' }}>{coords.name}</div>
                 <div style={{ fontSize: '10px', color: 'var(--color-muted)', marginBottom: '8px' }}>

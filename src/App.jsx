@@ -180,6 +180,11 @@ export default function App() {
                     setIsSearchOpen(true);
                   }}
                   onFocus={() => setIsSearchOpen(true)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && filteredNodes.length > 0) {
+                    handleDownscaleRequest(filteredNodes[0].id);
+                  }
+                }}
                 />
                 {!isSearchOpen && (
                   <div className="px-2 py-0.5 rounded bg-bg-elevated border border-subtle/20 text-[9px] font-bold text-muted uppercase tracking-wider hidden sm:block">
