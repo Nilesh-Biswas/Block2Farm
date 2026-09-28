@@ -1,4 +1,6 @@
-import React from 'react';
+﻿const fs = require('fs');
+
+const newCode = `import React from 'react';
 import { ShieldCheck, ShieldAlert, Wheat, MapPin, CheckCircle2 } from 'lucide-react';
 
 export const AdvisoryPanel = ({ alerts, isProcessing, language }) => {
@@ -18,7 +20,7 @@ export const AdvisoryPanel = ({ alerts, isProcessing, language }) => {
         </div>
       </div>
 
-      <div className={`flex-1 transition-all duration-500 ${isProcessing ? 'opacity-20 blur-[3px]' : 'opacity-100'}`}>
+      <div className={\`flex-1 transition-all duration-500 \${isProcessing ? 'opacity-20 blur-[3px]' : 'opacity-100'}\`}>
         {!hasCritical ? (
           <div className="flex flex-col items-center justify-center py-10 text-center h-full">
             <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 mb-3">
@@ -69,3 +71,7 @@ export const AdvisoryPanel = ({ alerts, isProcessing, language }) => {
     </div>
   );
 };
+`;
+
+fs.writeFileSync('src/components/dashboard/AdvisoryPanel.jsx', newCode, 'utf8');
+console.log("Rewrote AdvisoryPanel!");
