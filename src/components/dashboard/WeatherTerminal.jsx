@@ -3,7 +3,7 @@ import { CloudRain, Thermometer, Wind, Loader2, Zap, Cpu } from 'lucide-react';
 import { SoftWell, SoftBadge, SectionHeader } from '../ui/Neumorphic';
 
 const StatCell = ({ icon: Icon, iconColor, glowColor, value, unit, label }) => (
-  <div className="flex flex-col items-center py-3 px-2 rounded-xl bg-bg-base border border-subtle/20 group transition-all duration-300 hover:border-accent/20">
+  <div className="flex flex-col items-center text-center justify-center py-3 px-2 rounded-xl bg-bg-base border border-subtle/20 group transition-all duration-300 hover:border-accent/20">
     <div className={`p-2 rounded-lg mb-2 border transition-all duration-300 ${glowColor}`}>
       <Icon size={16} className={iconColor} />
     </div>

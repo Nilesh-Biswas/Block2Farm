@@ -1,4 +1,7 @@
-import React from 'react';
+﻿const fs = require('fs');
+const oldCode = fs.readFileSync('src/components/dashboard/RadarMapDisplay.jsx', 'utf8');
+
+const newCode = `import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
@@ -9,13 +12,13 @@ const createIcon = (isActive) => L.divIcon({
   className: '',
   iconSize: [24, 24],
   iconAnchor: [12, 12],
-  html: `
+  html: \`
     <div style="
       width: 24px; height: 24px;
       border-radius: 50%;
-      background: ${isActive ? '#7c6aff' : 'rgba(28, 42, 63, 0.9)'};
-      border: 2px solid ${isActive ? '#a78bfa' : 'rgba(100, 116, 139, 0.5)'};
-      box-shadow: ${isActive
+      background: \${isActive ? '#7c6aff' : 'rgba(28, 42, 63, 0.9)'};
+      border: 2px solid \${isActive ? '#a78bfa' : 'rgba(100, 116, 139, 0.5)'};
+      box-shadow: \${isActive
         ? '0 0 16px rgba(124, 106, 255, 0.6), 0 0 32px rgba(124, 106, 255, 0.2)'
         : '0 2px 8px rgba(0, 0, 0, 0.4)'};
       transition: all 0.3s ease;
@@ -24,11 +27,11 @@ const createIcon = (isActive) => L.divIcon({
       <div style="
         width: 6px; height: 6px;
         border-radius: 50%;
-        background: ${isActive ? '#fff' : '#7c6aff'};
-        ${isActive ? 'box-shadow: 0 0 6px rgba(255,255,255,0.5);' : ''}
+        background: \${isActive ? '#fff' : '#7c6aff'};
+        \${isActive ? 'box-shadow: 0 0 6px rgba(255,255,255,0.5);' : ''}
       "></div>
     </div>
-  `,
+  \`,
 });
 
 // Smooth Panning Component
@@ -38,9 +41,9 @@ const MapUpdater = ({ center }) => {
   React.useEffect(() => {
     if (center && center.lat && center.lng) {
       requestAnimationFrame(() => {
+        map.invalidateSize();
         map.stop();
         map.flyTo([center.lat, center.lng], 11, { duration: 1.5, easeLinearity: 0.25 });
-        setTimeout(() => { map.invalidateSize(); }, 300);
       });
     }
   }, [center.lat, center.lng, map]);
@@ -49,25 +52,23 @@ const MapUpdater = ({ center }) => {
 };
 
 export const RadarMapDisplay = ({ activePanchayat, terrainType, onSelectPanchayat, isProcessing }) => {
-  const terrainString = terrainType ? terrainType.toLowerCase().replace(/\s+/g, "_") : "unknown";
+  const terrainString = terrainType ? terrainType.toLowerCase().replace(/\\s+/g, "_") : "unknown";
   const activeCenter = PANCHAYAT_COORDS[activePanchayat] || PANCHAYAT_COORDS['cg-1'];
 
   return (
-    <div className="relative w-full h-full min-h-[400px] rounded-[var(--radius-card)] overflow-hidden transition-none">
+    <div className="relative w-full h-full min-h-[400px] rounded-[var(--radius-card)] overflow-hidden">
       <MapContainer
         center={[19.74, 81.69]} 
         zoom={11}
         scrollWheelZoom={true}
         zoomControl={true}
-        className="w-full h-full transition-none"
+        className="w-full h-full"
         style={{ borderRadius: 'inherit' }}
       >
-        {React.useMemo(() => (
-          <TileLayer
-            attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
-            url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
-          />
-        ), [])}
+        <TileLayer
+          attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
+          url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+        />
 
         <MapUpdater center={activeCenter} />
 
@@ -136,3 +137,6 @@ export const RadarMapDisplay = ({ activePanchayat, terrainType, onSelectPanchaya
     </div>
   );
 };
+`;
+fs.writeFileSync('src/components/dashboard/RadarMapDisplay.jsx', newCode, 'utf8');
+console.log('Successfully refactored Map component');

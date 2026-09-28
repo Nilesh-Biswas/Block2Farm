@@ -132,7 +132,7 @@ export default function App() {
           <div className="flex items-center gap-2 text-xs">
             <SoftBadge variant="accent">
               <Layers size={10} />
-              {currentData.name} (1-5 km²)
+              {currentData.name} (1-2 km²)
             </SoftBadge>
             <SoftBadge variant="default">
               {language === 'hi' ? '12 किमी बेस' : '12km Base'}: {currentData.baseBlockTemp}°C
@@ -162,7 +162,7 @@ export default function App() {
                 <Search size={16} className={isSearchOpen ? 'text-accent' : 'text-muted'} />
                 <input 
                   type="text" 
-                  placeholder={language === 'hi' ? "पंचायत या ब्लॉक खोजें (उदा. Kondagaon)..." : "Search Panchayat or Block (e.g. Supaul)..."} 
+                  placeholder={language === 'hi' ? "पंचायत या ब्लॉक खोजें (उदा. Kondagaon)..." : "Search Panchayat or Block (e.g. Badedongar)..."} 
                   className="bg-transparent border-none outline-none text-sm text-foreground flex-1 placeholder:text-muted/50"
                   value={searchQuery}
                   onChange={(e) => {
@@ -236,22 +236,13 @@ export default function App() {
               )}
             </div>
 
-            
-              {/* Inline SMS Notification */}
-              {toastMessage && (
-                <div className="animate-fade-in flex items-center gap-2.5 px-3 py-2 bg-success/15 border border-success/30 rounded-lg shadow-sm text-[11px] font-bold tracking-wide text-success shrink-0 backdrop-blur-md">
-                  <div className="w-5 h-5 rounded-full bg-success/20 flex items-center justify-center shrink-0">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  </div>
-                  {toastMessage}
-                </div>
-              )}
             </div>
 
             {/* Map */}
             <SoftWell className="h-[420px] relative z-0">
               <RadarMapDisplay
                 activePanchayat={activePanchayat}
+                terrainType={currentData.terrainType}
                 onSelectPanchayat={handleDownscaleRequest}
                 isProcessing={isProcessing}
               />
@@ -263,9 +254,11 @@ export default function App() {
               </div>
 
               {/* HUD: Node Label — bottom-left */}
-              <div className="absolute bottom-3 left-3 z-[1000] glass-overlay px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold text-accent tracking-wider uppercase pointer-events-none border border-accent/15">
-                ◉ {currentData.name}
-              </div>
+              <div className="absolute bottom-3 left-3 z-[1000] glass-overlay px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold text-accent tracking-wider uppercase pointer-events-none border border-accent/15 flex items-center gap-2">
+                  <div className="flex items-center gap-1.5"><MapPin size={12} /><span>{currentData.name}</span></div>
+                  <span className="text-slate-400/50">•</span>
+                  <span className="text-cyan-400">TERRAIN: {currentData.terrainType || 'UNKNOWN'}</span>
+                </div>
             </SoftWell>
             
             {/* Weather */}
@@ -276,6 +269,15 @@ export default function App() {
 
           {/* Right: Advisories & Chart (4 cols) */}
           <div className="lg:col-span-4 flex flex-col gap-5">
+            {/* Inline SMS Notification */}
+              {toastMessage && (
+                <div className="animate-fade-in flex items-center gap-2.5 px-3 py-2 bg-success/15 border border-success/30 rounded-lg shadow-sm text-[11px] font-bold tracking-wide text-success shrink-0 backdrop-blur-md">
+                  <div className="w-5 h-5 rounded-full bg-success/20 flex items-center justify-center shrink-0">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  {toastMessage}
+                </div>
+              )}
             <div className="flex-1">
               <AdvisoryPanel 
                 alerts={currentData.alerts} 
@@ -295,8 +297,6 @@ export default function App() {
             </div>
           </div>
           </div>
-
-          
 
       </main>
     </div>

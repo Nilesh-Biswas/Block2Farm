@@ -3,7 +3,7 @@ import { Activity, Mountain, TreePine, Wheat, Waves, Landmark, TrendingDown, Bui
 // Master list of 67 Authentic Rural Nodes across India
 const RAW_NODES = [
   // --- CHHATTISGARH (12) - Focus on Bastar & Rural belts ---
-  { id: 'cg-1', state: 'Chhattisgarh', panchayat: 'Badedongar', block: 'Farasgaon', type: 'Valley', lat: 19.74, lng: 81.69, icon: Waves, tempMod: 2.2, rain: 45.0, wind: 8 },
+  { id: 'cg-1', state: 'Chhattisgarh', panchayat: 'Badedongar', block: 'Farasgaon', type: 'Valley', lat: 19.74, lng: 81.69, icon: Waves, tempMod: 1.5, rain: 35.0, wind: 8 },
   { id: 'cg-2', state: 'Chhattisgarh', panchayat: 'Chitrakote', block: 'Lohandiguda', type: 'Riverside', lat: 19.20, lng: 81.71, icon: Droplets, tempMod: -1.5, rain: 30.0, wind: 14 },
   { id: 'cg-3', state: 'Chhattisgarh', panchayat: 'Gumiya', block: 'Bastanar', type: 'Hilltop', lat: 19.04, lng: 81.65, icon: Mountain, tempMod: -5.5, rain: 2.0, wind: 24 },
   { id: 'cg-4', state: 'Chhattisgarh', panchayat: 'Dhaurai', block: 'Narayanpur', type: 'Forest', lat: 19.73, lng: 81.25, icon: TreePine, tempMod: -2.6, rain: 18.0, wind: 6 },
@@ -144,6 +144,7 @@ RAW_NODES.forEach(node => {
   const baseBlockTemp = 32;
   MOCK_DB[node.id] = {
     name: `${node.panchayat} Panchayat`,
+      terrainType: node.type,
     baseBlockTemp,
     weather: {
       temp: parseFloat((baseBlockTemp + node.tempMod).toFixed(1)),
